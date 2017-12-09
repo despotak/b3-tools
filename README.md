@@ -2,7 +2,7 @@
 
 Usage:
  * monitor.sh
- * watch -n <interval> -d ./monitor.sh (for auto refresh every <interval> seconds)
+ * watch -n \<interval\> -d ./monitor.sh (for auto refresh every <interval> seconds)
 
 Requirements:
  * jq (json parser) https://stedolan.github.io/jq/download/
