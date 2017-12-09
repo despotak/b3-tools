@@ -1,5 +1,6 @@
 #!/bin/bash
 ## Usage: ./fnscrapper.sh <starting_block> <ending_block> (if you just want to see the results in the console
+##	  ./fnscrapper.sh <starting_block> <ending_block> > file.csv (if you want the results in a .cvs file)
 ##
 ## Prints Fundamental Node winners for each block, along with the respective reward
 ##
@@ -8,6 +9,7 @@
 ##
 ## version: 0.0.1
 ##
+
 for i in `seq $1 $2`;
 do
 	TXID=$(~/b3/github/B3-CoinV2/src/b3coind getblockbynumber $i | jq .tx[1])
