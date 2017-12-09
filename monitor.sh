@@ -8,7 +8,7 @@
 ## Prints information about your B3 Fundamental Node
 ##
 ## Author(s):
-##	cdr Archagel
+##	cdr Archangel
 ##
 ## version: 1.0.0
 ##
@@ -60,7 +60,7 @@ status=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $5}')
 address=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $7}')
 rank=$($B3_PATH/b3coind fundamentalnodelist rank $ip | awk '{print $3}')
 
-#Last paymement info
+#Last payment info
 json=$($B3_PATH/b3coind listtransactions \* 5)
 for i in `seq 0 4`;
 do
@@ -78,7 +78,7 @@ total_fns=$($B3_PATH/b3coind fundamentalnode count)
 expactation=$(($last_block+$total_fns-$chainz_block))
 time_expactation=$(awk "BEGIN {print $expactation/240*86400; exit}")
 
-#Current Balance
+#Current balance
 balance=$($B3_PATH/b3coind getbalance)
 
 ##OUTPUT##
