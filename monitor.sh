@@ -41,6 +41,14 @@ function trim () {
 	echo $r
 }
 
+##INIT ENV##
+last_date=
+last_txid=
+last_amount=
+last_block_hash=
+last_block=
+
+
 ##MAIN LOGIC##
 
 #Machine info
@@ -61,15 +69,17 @@ address=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $7}')
 rank=$($B3_PATH/b3coind fundamentalnodelist rank $ip | awk '{print $3}')
 
 #Last payment info
-json=$($B3_PATH/b3coind listtransactions \* 5)
-for i in `seq 0 4`;
+json=$($B3_PATH/b3coind listtransactions \* 10)
+for i in `seq 0 9`;
 do
 	if [ $(echo $json | jq .[$i].category) = "\"generate\"" ]; then
-		last_date=$(echo $json | jq .[$i].timereceived)
-		last_txid=$(trim $(echo $json | jq .[$i].txid))
-		last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
-		last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
-		last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
+		if [ $(trim $(echo $json | jq .[$i].address)) = $address ]; then
+			last_date=$(echo $json | jq .[$i].timereceived)
+			last_txid=$(trim $(echo $json | jq .[$i].txid))
+			last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
+			last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
+			last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
+		fi
 	fi
 done 
 
@@ -101,4 +111,3 @@ echo "FMN last reward block	: " $last_block
 echo "FMN next expected reward: " "in" $expactation "more blocks or" $(eval "echo $(date -ud "@$time_expactation" +'$((%s/3600/24)) days %H hours')") "(highly experimental)"
 echo "FMN balance		: " $(printf "%'.6f" $balance) "B3"
 echo "=================================="
-
