@@ -60,6 +60,7 @@ secs=$($B3_PATH/b3coind fundamentalnodelist activeseconds $ip | awk '{print $3}'
 up=$(eval "echo $(date -ud "@$secs" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')")
 version=$(trim $($B3_PATH/b3coind getinfo | jq .version))
 protocol=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $6}')
+coonection_count=$($B3_PATH/b3coind getconnectioncount)
 local_block=$($B3_PATH/b3coind getblockcount)
 local_hash=$($B3_PATH/b3coind getblockhash $local_block)
 chainz_block=$(curl -s https://chainz.cryptoid.info/b3/api.dws?q=getblockcount)
@@ -103,7 +104,7 @@ echo "node uptime		: " $up
 echo "node ip			: " $ip
 echo "node version		: " $version
 echo "node protocol		: " $protocol
-echo "hash of the"
+echo "total connections	: " $coonection_count
 echo "block (local)		: " $local_block "(" $local_hash ")"
 echo "block (chainz)		: " $chainz_block "(" $chainz_hash ")"
 echo "FMN status		: " $status
