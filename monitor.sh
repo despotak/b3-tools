@@ -63,7 +63,8 @@ protocol=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $6}')
 local_block=$($B3_PATH/b3coind getblockcount)
 local_hash=$($B3_PATH/b3coind getblockhash $local_block)
 chainz_block=$(curl -s https://chainz.cryptoid.info/b3/api.dws?q=getblockcount)
-chainz_hash=$(curl -s https://chainz.cryptoid.info/b3/api.dws?q=getblockhash;heihgt=$chainz_block)
+url="https://chainz.cryptoid.info/b3/api.dws?q=getblockhash;height="$chainz_block
+chainz_hash=$(trim $(curl -s $url))
 
 #FMN info
 status=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $5}')
