@@ -56,11 +56,9 @@ host=$(hostname)
 ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 
 #Node info
-secs=$($B3_PATH/b3coind fundamentalnodelist activeseconds $ip | awk '{print $3}')
-up=$(eval "echo $(date -ud "@$secs" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')")
 version=$(trim $($B3_PATH/b3coind getinfo | jq .version))
 protocol=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $6}')
-coonection_count=$($B3_PATH/b3coind getconnectioncount)
+conection_count=$($B3_PATH/b3coind getconnectioncount)
 local_block=$($B3_PATH/b3coind getblockcount)
 local_hash=$($B3_PATH/b3coind getblockhash $local_block)
 chainz_block=$(curl -s https://chainz.cryptoid.info/b3/api.dws?q=getblockcount)
@@ -68,29 +66,51 @@ url="https://chainz.cryptoid.info/b3/api.dws?q=getblockhash;height="$chainz_bloc
 chainz_hash=$(trim $(curl -s $url))
 
 #FMN info
-status=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $5}')
-address=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $7}')
-rank=$($B3_PATH/b3coind fundamentalnodelist rank $ip | awk '{print $3}')
-
-#Last payment info
-json=$($B3_PATH/b3coind listtransactions \* 10)
-for i in `seq 0 9`;
-do
-	if [ $(echo $json | jq .[$i].category) = "\"generate\"" ]; then
-		if [ $(trim $(echo $json | jq .[$i].address)) = $address ]; then
-			last_date=$(echo $json | jq .[$i].timereceived)
-			last_txid=$(trim $(echo $json | jq .[$i].txid))
-			last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
-			last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
-			last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
-		fi
+debug=$($B3_PATH/b3coind fundamentalnode debug)
+if [ "$debug" = "Missing fundamentalnode input, please look at the documentation for instructions on fundamentalnode creation" ]; then
+	up="This is not a Fundamental Node"
+	status="This is not a Fundamental Node"
+	address="This is not a Fundamental Node"
+	rank="This is not a Fundamental Node"
+	last_payment="This is not a Fundamental Node"
+	last_amount="This is not a Fundamental Node"
+	last_block="This is not a Fundamental Node"
+	time_expactation="This is not a Fundamental Node"
+else
+	if [ "$debug" != "successfully started fundamentalnode" ]; then
+		echo "~~WARNING: Fundamental Node is not started~~"
 	fi
-done 
+	
+	secs=$($B3_PATH/b3coind fundamentalnodelist activeseconds $ip | awk '{print $3}')
+	up=$(eval "echo $(date -ud "@$secs" +'$((%s/3600/24)) days %H hours %M minutes %S seconds')")
+	
+	status=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $5}')
+	address=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $7}')
+	rank=$($B3_PATH/b3coind fundamentalnodelist rank $ip | awk '{print $3}')
 
-#Future expectations
-total_fns=$($B3_PATH/b3coind fundamentalnode count)
-expactation=$(($last_block+$total_fns-$chainz_block))
-time_expactation=$(awk "BEGIN {print $expactation/240*86400; exit}")
+	#Last payment info
+	json=$($B3_PATH/b3coind listtransactions \* 10)
+	for i in `seq 0 9`;
+	do
+		if [ $(echo $json | jq .[$i].category) = "\"generate\"" ]; then
+			if [ $(trim $(echo $json | jq .[$i].address)) = $address ]; then
+				last_date=$(echo $json | jq .[$i].timereceived)
+				last_payment=$(eval "echo $(date -d @$last_date)")
+				last_txid=$(trim $(echo $json | jq .[$i].txid))
+				last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
+				last_amount=$(eval "echo $('printf "%'.6f" $last_amount" "B3")")
+				last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
+				last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
+			fi
+		fi
+	done
+	
+	#Future expectations
+	total_fns=$($B3_PATH/b3coind fundamentalnode count)
+	expactation=$(($last_block+$total_fns-$chainz_block))
+	time_expactation=$(awk "BEGIN {print $expactation/240*86400; exit}")
+	time_expactation=$(echo "in" $expactation "more blocks or" $(eval "echo $(date -ud "@$time_expactation" +'$((%s/3600/24)) days %H hours')") "(highly experimental)")
+fi
 
 #Current balance
 balance=$($B3_PATH/b3coind getbalance)
@@ -100,19 +120,22 @@ balance=$($B3_PATH/b3coind getbalance)
 echo "=================================="
 echo "hostname		: " $host
 echo "host uptime/load	: " $(uptime)
-echo "node uptime		: " $up
-echo "node ip			: " $ip
+echo "host ip			: " $ip
+echo "-----------------"
 echo "node version		: " $version
 echo "node protocol		: " $protocol
-echo "total connections	: " $coonection_count
+echo "total connections	: " $conection_count
 echo "block (local)		: " $local_block "(" $local_hash ")"
 echo "block (chainz)		: " $chainz_block "(" $chainz_hash ")"
+echo "-----------------"
 echo "FMN status		: " $status
+echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
-echo "FMN last payment	: " $(date -d @$last_date)
-echo "FMN last reward		: " $(printf "%'.6f" $last_amount) "B3"
+echo "FMN last payment	: " $last_payment
+echo "FMN last reward		: " $last_amount
 echo "FMN last reward block	: " $last_block
-echo "FMN next expected reward: " "in" $expactation "more blocks or" $(eval "echo $(date -ud "@$time_expactation" +'$((%s/3600/24)) days %H hours')") "(highly experimental)"
-echo "FMN balance		: " $(printf "%'.6f" $balance) "B3"
+echo "FMN next expected reward: " $time_expactation
+echo "-----------------"
+echo "balance			: " $(printf "%'.6f" $balance) "B3"
 echo "=================================="
