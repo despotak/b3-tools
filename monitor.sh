@@ -132,8 +132,8 @@ echo "FMN status		: " $status
 echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
-echo "FMN last payment	: " $last_payment "B3"
-echo "FMN last reward		: " $last_amount
+echo "FMN last payment	: " $last_payment
+echo "FMN last reward		: " $last_amount  "B3"
 echo "FMN last reward block	: " $last_block
 echo "FMN next expected reward: " $time_expactation
 echo "-----------------"
