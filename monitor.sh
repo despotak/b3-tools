@@ -133,9 +133,9 @@ echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
 echo "FMN last payment	: " $last_payment
-echo "FMN last reward		: " $last_amount  "B3"
+echo "FMN last reward		: " $last_amount  "kB3"
 echo "FMN last reward block	: " $last_block
 echo "FMN next expected reward: " $time_expactation
 echo "-----------------"
-echo "balance			: " $(printf "%'.6f" $balance) "B3"
+echo "balance			: " $(printf "%'.6f" $balance) "kB3"
 echo "=================================="
