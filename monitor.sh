@@ -57,7 +57,7 @@ ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\
 
 #Node info
 version=$(trim $($B3_PATH/b3coind getinfo | jq .version))
-protocol=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $6}')
+protocol=$($B3_PATH/b3coind getinfo | jq .protocolversion )
 conection_count=$($B3_PATH/b3coind getconnectioncount)
 local_block=$($B3_PATH/b3coind getblockcount)
 local_hash=$($B3_PATH/b3coind getblockhash $local_block)
