@@ -98,7 +98,7 @@ else
 				last_payment=$(eval "echo $(date -d @$last_date)")
 				last_txid=$(trim $(echo $json | jq .[$i].txid))
 				last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
-				last_amount=$(eval "echo $(printf "%'.6f" $last_amount)")
+				last_amount=$(eval "echo $(printf "%'.6f" $last_amount)" kB3)
 				last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
 				last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
 			fi
@@ -133,7 +133,7 @@ echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
 echo "FMN last payment	: " $last_payment
-echo "FMN last reward		: " $last_amount  "kB3"
+echo "FMN last reward		: " $last_amount
 echo "FMN last reward block	: " $last_block
 echo "FMN next expected reward: " $time_expactation
 echo "-----------------"
