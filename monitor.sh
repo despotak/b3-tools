@@ -75,6 +75,7 @@ if [ "$debug" = "Missing fundamentalnode input, please look at the documentation
 	last_payment="This is not a Fundamental Node"
 	last_amount="This is not a Fundamental Node"
 	last_block="This is not a Fundamental Node"
+	total_fns="This is not a Fundamental Node"
 	time_expactation="This is not a Fundamental Node"
 else
 	if [ "$debug" != "successfully started fundamentalnode" ]; then
@@ -132,6 +133,7 @@ echo "FMN status		: " $status
 echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
+echo "Total FMN network:	: " $total_fns
 echo "FMN last payment	: " $last_payment
 echo "FMN last reward		: " $last_amount
 echo "FMN last reward block	: " $last_block
