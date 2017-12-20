@@ -54,7 +54,7 @@ git clone https://github.com/B3-Coin/B3-CoinV2.git /home/$username/B3-CoinV2
 git clone https://github.com/despotak/b3-tools.git /home/$username/b3-tools
 
 ## install dependencies
-apt-get -y update && sudo apt-get -y install build-essential libssl-dev libdb++-dev libboost-all-dev libqrencode-dev
+apt-get -y update && apt-get -y install build-essential libssl-dev libdb++-dev libboost-all-dev libqrencode-dev
 
 ## enter src dir, make, compile, and symlink bin into /usr/bin/
 cd /home/$username/B3-CoinV2/src/leveldb
@@ -84,6 +84,11 @@ echo "staking=0" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "promode=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "logtimestamps=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "maxconnections=300" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
+
+## change ownership
+chmod -R $username:$username /home/$username/B3-CoinV2/
+chmod -R $username:$username /home/$username/.B3-CoinV2/
+chmod -R $username:$username /home/$username/b3-tools/
 
 ## reboot
 reboot now
