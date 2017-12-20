@@ -46,6 +46,9 @@ fi
 #grep -q "ChallengeResponseAuthentication" /etc/ssh/sshd_config && sed -i "/^[^#]*ChallengeResponseAuthentication[[:space:]]yes.*/c\ChallengeResponseAuthentication no" /etc/ssh/sshd_config || echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config
 #grep -q "^[^#]*PasswordAuthentication" /etc/ssh/sshd_config && sed -i "/^[^#]*PasswordAuthentication[[:space:]]yes/c\PasswordAuthentication no" /etc/ssh/sshd_config || echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 
+## open firewall
+ufw allow 5647
+
 ## install git, clone wallet repo and tools
 git clone https://github.com/B3-Coin/B3-CoinV2.git /home/$username/B3-CoinV2
 git clone https://github.com/despotak/b3-tools.git /home/$username/b3-tools
