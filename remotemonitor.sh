@@ -21,16 +21,19 @@ chainz_hash=$(trim $(curl -s $url))
 
 echo -e host: chainz.cryptoid.info '\t'connections: "???"'\t'block: $chainz_block "(" $chainz_hash ")"
 
+## SEED DATA
+
+user="b3"
 
 for i in $(seq -f "%03g" 1 2); do
 
 	host="seed"$i".b3nodes.net"
-	blockcount=$(ssh "b3@"$host b3coind getblockcount)
-	connectioncount=$(ssh "b3@"$host b3coind getconnectioncount)
-	blockhash=$(ssh "b3@"$host b3coind getblockhash $blockcount)
-	uptime=$(ssh "b3@"$host uptime)
-	memory=$(ssh "b3@"$host free -m | grep Mem | awk '{print $4}')
-	swap=$(ssh "b3@"$host free -m | grep Swap | awk '{print $4}')
+	blockcount=$(ssh $user@$host b3coind getblockcount)
+	connectioncount=$(ssh $user@$host b3coind getconnectioncount)
+	blockhash=$(ssh $user@$host b3coind getblockhash $blockcount)
+	uptime=$(ssh $user@$host uptime)
+	memory=$(ssh $user@$host free -m | grep Mem | awk '{print $4}')
+	swap=$(ssh $user@$host free -m | grep Swap | awk '{print $4}')
 	echo -e host: $host'\t'connections: $(printf "%03g" $connectioncount)'\t'block: $blockcount "(" $blockhash ")"'\t'Uptime \& load: $uptime'\t' Mem: $memory "MB" Swap: $swap "MB"
 
 done
