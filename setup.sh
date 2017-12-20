@@ -63,7 +63,7 @@ make clean
 make libmemenv.a libleveldb.a
 cd ..
 make -f makefile.unix
-ln -s ~/B3-CoinV2/src/b3coind /usr/bin/b3coind
+ln -s /home/$username/B3-CoinV2/src/b3coind /usr/bin/b3coind
 
 ## create b3coin.conf
 echo "rpcuser=b3coinrpc" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
