@@ -65,9 +65,18 @@ cd ..
 make -f makefile.unix
 ln -s /home/$username/B3-CoinV2/src/b3coind /usr/bin/b3coind
 
+## initialize the daemon
+#b3coind --datadir=/home/$username/.B3-CoinV2/
+#wait 5
+#b3coind stop
+
+mkdir /home/$username/.B3-CoinV2/
+touch /home/$username/.B3-CoinV2/b3coin.conf
+
 ## create b3coin.conf
 echo "rpcuser=b3coinrpc" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
-echo "rpcpassword=" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
+pass=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
+echo "rpcpassword="$pass | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "daemon=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "server=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "listen=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
@@ -76,8 +85,11 @@ echo "promode=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "logtimestamps=1" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 echo "maxconnections=300" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 
+## reboot
+reboot now
+
 ## login as user
-login $username
+#login $username
 
 ## start daemon
 #b3coind
