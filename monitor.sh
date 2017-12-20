@@ -52,12 +52,12 @@ last_block=
 ##MAIN LOGIC##
 
 #Machine info
-host=$(hostname)
+host=$(hostname -f)
 ip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 
 #Node info
 version=$(trim $($B3_PATH/b3coind getinfo | jq .version))
-protocol=$($B3_PATH/b3coind fundamentalnodelist full $ip | awk '{print $6}')
+protocol=$($B3_PATH/b3coind getinfo | jq .protocolversion )
 conection_count=$($B3_PATH/b3coind getconnectioncount)
 local_block=$($B3_PATH/b3coind getblockcount)
 local_hash=$($B3_PATH/b3coind getblockhash $local_block)
@@ -75,6 +75,7 @@ if [ "$debug" = "Missing fundamentalnode input, please look at the documentation
 	last_payment="This is not a Fundamental Node"
 	last_amount="This is not a Fundamental Node"
 	last_block="This is not a Fundamental Node"
+	total_fns="This is not a Fundamental Node"
 	time_expactation="This is not a Fundamental Node"
 else
 	if [ "$debug" != "successfully started fundamentalnode" ]; then
@@ -98,7 +99,7 @@ else
 				last_payment=$(eval "echo $(date -d @$last_date)")
 				last_txid=$(trim $(echo $json | jq .[$i].txid))
 				last_amount=$($B3_PATH/b3coind gettransaction $last_txid | jq .vout[3].value)
-				last_amount=$(eval "echo $(printf "%'.6f" $last_amount)")
+				last_amount=$(eval "echo $(printf "%'.6f" $last_amount)" kB3)
 				last_block_hash=$(trim $($B3_PATH/b3coind gettransaction $last_txid | jq .blockhash))
 				last_block=$($B3_PATH/b3coind getblock $last_block_hash | jq .height)
 			fi
@@ -132,10 +133,11 @@ echo "FMN status		: " $status
 echo "FMN uptime		: " $up
 echo "FMN address		: " $address
 echo "FMN rank		: " $rank
+echo "Total FMN network:	: " $total_fns
 echo "FMN last payment	: " $last_payment
-echo "FMN last reward		: " $last_amount  "B3"
+echo "FMN last reward		: " $last_amount
 echo "FMN last reward block	: " $last_block
 echo "FMN next expected reward: " $time_expactation
 echo "-----------------"
-echo "balance			: " $(printf "%'.6f" $balance) "B3"
+echo "balance			: " $(printf "%'.6f" $balance) "kB3"
 echo "=================================="
