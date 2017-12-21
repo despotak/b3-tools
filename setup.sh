@@ -85,10 +85,9 @@ chown -R $username:$username /home/$username/.B3-CoinV2/
 chown -R $username:$username /home/$username/b3-tools/
 
 
-## TODO
+## edit .bashrc to show hostname instead of shortname
+sed -i 's/u@\\h/u@\\H/g' /home/$username/.bashrc
 
-# edit .bashrc to show hostname instead of shortname
-# make the maxconnections an optional argument
 
 ## import ssh key (do you have a  better idea?)
 mkdir /home/$username/.ssh
@@ -102,6 +101,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4JYQo6bC1R8zTHKnBiB7Md7eCvDP8A167h
 ## add b3coind on /etc/rc.local
 chmod +x /et/rc.local
 echo b3coind | tee -a /etc/rc.local
+
 
 ## reboot
 reboot now
