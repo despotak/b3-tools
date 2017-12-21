@@ -99,7 +99,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4JYQo6bC1R8zTHKnBiB7Md7eCvDP8A167h
 
 
 ## add b3coind on /etc/rc.local
-chmod +x /et/rc.local
+chmod +x /etc/rc.local
 echo b3coind | tee -a /etc/rc.local
 
 
