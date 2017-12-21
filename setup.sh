@@ -86,10 +86,22 @@ chown -R $username:$username /home/$username/b3-tools/
 
 
 ## TODO
-# import ssh keys
+
 # edit .bashrc to show hostname instead of shortname
 # make the maxconnections an optional argument
-# add b3coind on /etc/rc.local (?)
+
+## import ssh key (do you have a  better idea?)
+mkdir /home/$username/.ssh
+touch /home/$username/.ssh/authorized_keys
+#cdr Archangel
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDPqKkZvhLU2y/+uUb5X4FUNTb0ojce69pPjhL9xX/Zh++2FvT6koVyjUr8B5j51oacbWAamEK9p9ozntoX+C2SR+JcPIoTmlUs9cFYmCefBH06clGGc9KBwIsURRy9TgrQcYt9JKxgy3KdVx0S8r+DCU8lu+q4scIKlzx+MbIAxsuLOqhfrkYwPKLs4yjpboNXOHo5l+sp6P1FJpK51i828phygGemvzSTR3cm3QPb7TYtXAnkDZQDGr0PDra8FiNq+Q1qyFLguFUJafrwX4zGahb9Tn3WRobFVVRpqL2+SydDjvIFk8jC1uQAQz+PuCvEN/1TZCqvYEV/hbR/Gvj despotak@CHAOS" | tee -a /home/$username/.ssh/authorized_keys
+#SkyHyperV
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4JYQo6bC1R8zTHKnBiB7Md7eCvDP8A167hy2ksnmlrk6vWkP1qmr5shN/AMjYw2PR9U+UubHRtMiRsVvE1AScw/MJDH8KEbrK5TdTDMG0QK7UHBtktdBotp3u14CBrlGAVSdTxe+ZD8ZAS3vCH6/Ppj91DwkBqoig31uabeK5frOH5B+5qSAF1SsHC23HgpkX6HgsvZD26IF/AVzefGmNKTF6Pwlooe7/wsDYm9i576vrpWyHcW8Au5K/XV+13XhBGBddbhi+fHEWjtllH0FbPWvSlDz13yCl85aYAMzQNkJA1HXqN7HEnOfBlKTLNUOYVHQ8KaWgwVg5ppQmd+p kasun@Naushads-MacBook-Pro.local" | tee -a /home/$username/.ssh/authorized_keys
+
+
+## add b3coind on /etc/rc.local
+chmod +x /et/rc.local
+echo b3coind | tee -a /etc/rc.local
 
 ## reboot
 reboot now
