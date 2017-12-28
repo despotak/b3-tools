@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 ## get username
 username=$(whoami)
 
@@ -15,12 +16,15 @@ cd /home/$username/b3-tools
 git pull
 
 
-## install dependencies
-#sudo apt-get -y update && apt-get -y upgrade
-
-
 ## stop daemon
-/home/$username/B3-CoinV2/src/b3coind stop
+ps cax | grep b3coind > /dev/null
+if [ $? -eq 0 ]; then
+	#echo "Process is running."
+	/home/$username/B3-CoinV2/src/b3coind stop
+else
+	echo "b3coind is not running."
+fi
+
 sleep 2
 
 
@@ -31,7 +35,12 @@ sleep 2
 #cd ..
 cd /home/$username/B3-CoinV2/src
 make -f makefile.unix
-sudo ln -s /home/$username/B3-CoinV2/src/b3coind /usr/bin/b3coind
+if [ -h "/usr/bin/b3coind" ]; then
+	echo Symbolic link already exists
+else
+	sudo ln -s /home/$username/B3-CoinV2/src/b3coind /usr/bin/b3coind
+	echo Symbolic link added
+fi
 
 
 ## start daemon
