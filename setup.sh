@@ -101,7 +101,7 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4JYQo6bC1R8zTHKnBiB7Md7eCvDP8A167h
 ## add b3coind on /etc/rc.local
 chmod +x /etc/rc.local
 #echo b3coind | tee -a /etc/rc.local
-sed -i 's/exit 0/\/usr\/bin\/b3coind\n\nexit 0/' /etc/rc.local
+sed -i 's/^exit 0/\/usr\/bin\/b3coind\n\nexit 0/' /etc/rc.local
 
 ## reboot
 reboot now
