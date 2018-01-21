@@ -83,6 +83,7 @@ echo "maxconnections=300" | tee -a /home/$username/.B3-CoinV2/b3coin.conf
 chown -R $username:$username /home/$username/B3-CoinV2/
 chown -R $username:$username /home/$username/.B3-CoinV2/
 chown -R $username:$username /home/$username/b3-tools/
+chown -R $username:$username /home/$username/.ssh/
 
 
 ## edit .bashrc to show hostname instead of shortname
