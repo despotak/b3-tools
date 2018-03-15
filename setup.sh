@@ -96,7 +96,7 @@ touch /home/$username/.ssh/authorized_keys
 #cdr Archangel
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDPqKkZvhLU2y/+uUb5X4FUNTb0ojce69pPjhL9xX/Zh++2FvT6koVyjUr8B5j51oacbWAamEK9p9ozntoX+C2SR+JcPIoTmlUs9cFYmCefBH06clGGc9KBwIsURRy9TgrQcYt9JKxgy3KdVx0S8r+DCU8lu+q4scIKlzx+MbIAxsuLOqhfrkYwPKLs4yjpboNXOHo5l+sp6P1FJpK51i828phygGemvzSTR3cm3QPb7TYtXAnkDZQDGr0PDra8FiNq+Q1qyFLguFUJafrwX4zGahb9Tn3WRobFVVRpqL2+SydDjvIFk8jC1uQAQz+PuCvEN/1TZCqvYEV/hbR/Gvj despotak@CHAOS" | tee -a /home/$username/.ssh/authorized_keys
 #SkyHyperV
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDH4JYQo6bC1R8zTHKnBiB7Md7eCvDP8A167hy2ksnmlrk6vWkP1qmr5shN/AMjYw2PR9U+UubHRtMiRsVvE1AScw/MJDH8KEbrK5TdTDMG0QK7UHBtktdBotp3u14CBrlGAVSdTxe+ZD8ZAS3vCH6/Ppj91DwkBqoig31uabeK5frOH5B+5qSAF1SsHC23HgpkX6HgsvZD26IF/AVzefGmNKTF6Pwlooe7/wsDYm9i576vrpWyHcW8Au5K/XV+13XhBGBddbhi+fHEWjtllH0FbPWvSlDz13yCl85aYAMzQNkJA1HXqN7HEnOfBlKTLNUOYVHQ8KaWgwVg5ppQmd+p kasun@Naushads-MacBook-Pro.local" | tee -a /home/$username/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxqu2F/COfpqo04UrQGgqfh/Y5Cs1sF1sgB9iy2MpzIao7N+8CMcGyFjKxDyIEo+u0ClpoOblW0IXiAZL/B2YqFHfN3zuht+BxDoyQ6GeIif6ybHK6zCV2U0BaZTBmKYjk9pr2t9OfYdOzTApkcFRHeW17kPUoFog7MLAG9F5un+iKVD1klA/X9HTQoiYmbffp5zSGH0rISWZINRhK/Yqrj9MIBxEjVEMTcqGWz+yJHrs+ufn3Xb02Hnl5JCPRCSyWxMad3B8p4uP3L2Dra9pyFhTx8FFsrFIpW/GDWgK/+zR4ul10tg1QVzTcqewuJrCwUq9gj3daq2Bw0S8dBkk5 SkyHyperV@MacBook" | tee -a /home/$username/.ssh/authorized_keys
 
 
 ## add b3coind on /etc/rc.local
