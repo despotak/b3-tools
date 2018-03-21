@@ -60,7 +60,8 @@ make clean
 make libmemenv.a libleveldb.a
 cd ..
 make -f makefile.unix
-ln -s /home/$username/B3-CoinV2/src/b3coind /usr/bin/b3coind
+strip b3coind
+mv b3coind /usr/bin/b3coind
 
 
 ## create b3coin.conf
